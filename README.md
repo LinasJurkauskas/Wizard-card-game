@@ -1,3 +1,3 @@
 # Python-madness
 Python projects
-lala
+a learning python github to test skills and build rookie projects.
