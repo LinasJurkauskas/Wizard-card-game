@@ -25,11 +25,11 @@ More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 * list `CPU_names` - list of available CPU players to join in the game.
 
 * **`player_list` - the master list of lists cointaining:
-* 1. player name
-* 2. player score
-* 3. player line number for session
-* 4. player line number for round
-* 5. player class object (hand for human, computer_hand for computer)
+* player name
+* player score
+* player line number for session
+* player line number for round
+* player class object (hand for human, computer_hand for computer)
 
 ### Classes
 #### 1. Deck_class - recreated each time a new session starts: 
