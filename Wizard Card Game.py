@@ -51,6 +51,7 @@ import copy
 #FUNCTIONS
 #identify_winner()
 #global player_list
+#testing
 
 # CARDS AND OTHER MAIN VARIABLES
 colours = ('Red', 'Blue', 'Green', 'Yellow')
