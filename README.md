@@ -32,22 +32,21 @@ More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 5. player class object (hand for human, computer_hand for computer)
 
 ### Classes
-#1. Deck_class - recreated each time a new session starts: 
- 1.1 Copies in the cards and card_values. 
- 1.2 Determines the session dominant card, enhances the card_values for dominant colour cards.
- 1.3 distributes the cards to players.
+#### 1. Deck_class - recreated each time a new session starts: 
+ * Copies in the cards and card_values. 
+ * Determines the session dominant card, enhances the card_values for dominant colour cards.
+ * distributes the cards to players.
 
- 2. Hand - A human player class. Recreated each time a new session starts:
- 2.1 Holds available cards for human player for current session.
- 2.2 placing the bid for current session function.
- 2.3 placing card for current round function.
+#### 2. Hand - A human player class. Recreated each time a new session starts:
+ * Holds available cards for human player for current session.
+ * placing the bid for current session function.
+ * placing card for current round function.
 
- 3. Computer_Hand - recreated each time a new session starts:
- 3.1 Holds available cards for computer player for current session.
- 3.2 Evaluating cards &placing the bid for current session function.
- 3.3 Evaluating cards & placing card for current round function
+#### Computer_Hand - recreated each time a new session starts:
+ * Holds available cards for computer player for current session.
+ * Evaluating cards &placing the bid for current session function.
+ * Evaluating cards & placing card for current round function
 
-#FUNCTIONS
-#identify_winner()
-#global player_list
-#testing
+### FUNCTIONS
+#### 1. identify_winner()
+
