@@ -20,9 +20,9 @@ More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 * Human player can choose between 2-5 computer opponents.
 
 ### Variables:
-* cards - Full list of all cards that are used in deck
-* cards_values: card name : card game value , card bid likelyhood(%) of computer player
-* CPU_names - list of available CPU players to join in the game.
+* list 'cards' - all cards that are used in deck
+* dict `cards_values`: card name : card game value , card bid likelyhood(%) of computer player
+* list `CPU_names` - list of available CPU players to join in the game.
 
 #### player_list - the master list of lists cointaining:
 #1. player name
