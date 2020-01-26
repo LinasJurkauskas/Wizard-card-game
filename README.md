@@ -1,11 +1,12 @@
 # Wizard card game
-Python projects
-a learning python github to test skills and build rookie projects.
-#Game flow: https://en.wikipedia.org/wiki/Wizard_(card_game)
-#deck has 60 cards. 13 of each colour (52) + 8 special cards(4 wizards & 4 fools)
-#wizard card is most powerful. The first player to place wizard card always wins the round.
-#fool card is the least powerful. The first player to place fool card always looses the round.
-#regular card works based on their numerical value (i.e. red fighter 3 < red captain 7)
+
+## General Game mechanics
+
+* deck has 60 cards. 13 of each colour (52) + 8 special cards(4 wizards & 4 fools)
+* wizard card is most powerful. The first player to place wizard card always wins the round.
+* fool card is the least powerful. The first player to place fool card always looses the round.
+* regular card works based on their numerical value (i.e. red fighter 3 < red captain 7)
+More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game))
 
 #There is 1 human player and 2-5 CPU players.
 #The game is divided in sessions. Each session increases the number of cards in hand and therefore rounds.
