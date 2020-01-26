@@ -6,16 +6,19 @@
 * wizard card is most powerful. The first player to place wizard card always wins the round.
 * fool card is the least powerful. The first player to place fool card always looses the round.
 * regular card works based on their numerical value (i.e. red fighter 3 < red captain 7)
-More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game))
+* The game is divided in sessions (called rounds in original documentation). 
+* First session gives each player one card in hand -> 1 round. 
+* Next session gives two cards and so forth until all the deck is distributed among players.
+* Before the start of each session players are asked how many rounds they expect to win.
+* `Key to win the game is to correctly predict how many rounds you can win in session.`
+* During round each player must place 1 card of their hand (complying with the card placing rules). 
+* `Highest value card wins the round.`
+More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 
-#There is 1 human player and 2-5 CPU players.
-#The game is divided in sessions. Each session increases the number of cards in hand and therefore rounds.
-#Before the start of each session players are asked how many rounds they expect to win.
-#First session has players 1 card in hand -> 1 round. Next session 2 and so forth until all the deck is distributed among players.
-#Key to win the game is to correctly predict how many rounds you can win in session.
-#During round each player must place 1 card of their hand (complying with the card placing rules). Highest value card wins the round.
-#After each session the score is calculated and updated.
-#highest total score at the end of the game wins!
+## Code mechanics
+* 1 human player.
+* Human player can choose between 2-5 computer opponents.
+
 #--------------------------------------------------------------------------------------------------------------------------------------------
 #Starting variables:
 #cards - Full list of all cards that are used in deck
