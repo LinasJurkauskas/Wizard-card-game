@@ -24,7 +24,7 @@ More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 * dict `cards_values`: card name : card game value , card bid likelyhood(%) of computer player
 * list `CPU_names` - list of available CPU players to join in the game.
 
-* **`player_list` - the master list of lists cointaining:
+* list `player_list` - contains:
 * player name
 * player score
 * player line number for session
