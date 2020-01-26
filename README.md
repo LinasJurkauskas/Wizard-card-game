@@ -19,21 +19,19 @@ More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 * 1 human player.
 * Human player can choose between 2-5 computer opponents.
 
-#--------------------------------------------------------------------------------------------------------------------------------------------
-#Starting variables:
-#cards - Full list of all cards that are used in deck
-#cards_values - a dictionary of cards with [card game value, card bid likelyhood(%) for cpu]
-#cards & card_values are copied into the deck class each session, where their card game values may be modified depending on the session dominant card.
-#CPU_names - list of available CPU players to join in the game.
-#
-#player_list - the master list of lists cointaining:
+### Variables:
+* cards - Full list of all cards that are used in deck
+* cards_values: card name : card game value , card bid likelyhood(%) of computer player
+* CPU_names - list of available CPU players to join in the game.
+
+#### player_list - the master list of lists cointaining:
 #1. player name
 #2. player score
 #3. player line number for session
 4. player line number for round
-5. player class object (had for human, computer_hand for computer)
+5. player class object (hand for human, computer_hand for computer)
 
-#Classes
+### Classes
 #1. Deck_class - recreated each time a new session starts: 
  1.1 Copies in the cards and card_values. 
  1.2 Determines the session dominant card, enhances the card_values for dominant colour cards.
