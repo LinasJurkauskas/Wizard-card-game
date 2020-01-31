@@ -31,6 +31,16 @@ More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
  * Copies in the cards and card_values. 
  * Determines the session dominant card, enhances the card_values for dominant colour cards.
  * distributes the cards to players.
+ ##### 1.1 Find_dominant function
+ * once deck is shuffled, random card is selected (popped) out of deck.
+ * if it's a colour card it determines the session dominant colour. If it's not colour, there is no dominant card.
+ * the popped card is out of the game for that session.
+ ##### 1.2 Evaluate deck
+* for cards in deck with dominant colour, the deck_values are adjusted(need to be calibrated further)
+* 20 basis points so that dominant card would overrule any other colour card if allowed
+* +0.25 % chance that cpu would bid to win on this card during bidding session. 
+##### 1.3 deal
+* function used to pop cards out of deck and return to player hand(s)
 
 #### 2. Hand - A human player class. Recreated each time a new session starts:
  * Holds available cards for human player for current session.
