@@ -46,11 +46,25 @@ More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
  * Holds available cards for human player for current session.
  * placing the bid for current session function.
  * placing card for current round function.
+##### 2.1 add_card
+* human adds cards to his hand from the deck (function connected to the 1.3 deal)
+##### 2.2 place_bid
+* player is given a question how many bids he wants to make in a session
+* answer within game rules is inserted into bid_list
+##### 2.3 place_card
+* User is asked to select card from his deck, which is then validated and if accepted placed.
 
-#### Computer_Hand - recreated each time a new session starts:
+#### 3. Computer_Hand - recreated each time a new session starts:
  * Holds available cards for computer player for current session.
  * Evaluating cards &placing the bid for current session function.
  * Evaluating cards & placing card for current round function
+##### 3.1 place_bid 
+ * CPU evalutes all his cards and based on its value and % chance determines if he wants to bid on it.
+##### 3.2 place_card
+* defines what cards cpu can place in the round (cpu_round_cards list generated)
+* defines min/max values of his cpu_round_cards.
+* defines if CPU wants to win/lose, can cpu win/lose and takes the action (based on its score in the bid_list and the current winner score)
+* round dominant colour determined.
 
 ### FUNCTIONS
 #### 1. identify_winner()
