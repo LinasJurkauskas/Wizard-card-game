@@ -78,6 +78,7 @@ More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 * function calculates the score and updates it in player_list based on bid_list.
 * Run at the end of each session
 
-
+#### total_score_updater()
+* this function reorders player_list after round (winner always starts first)
 
 
