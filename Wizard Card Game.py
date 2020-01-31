@@ -44,9 +44,6 @@ class Deck_class():
         random.shuffle(self.deck)
 
     def find_dominant(self):
-        #once deck is shuffled, random card is selected (popped) out of deck.
-        # if it's a colour card it determines the session dominant colour. If it's not colour, there is no dominant card.
-        # the popped card is out of the game for that session.
         self.dominant_card = str(self.deck.pop())
         if self.dominant_card.find('[') == -1:
             self.dominant_colour = 'None'
@@ -56,9 +53,6 @@ class Deck_class():
         return self.dominant_colour
 
     def evaluate_deck(self):
-        #for cards in deck with dominant colour, the deck_values are adjusted:
-        #20 basis points so that dominant card would overrule any other colour card if allowed
-        # +0.25 % chance that cpu would bid to win on this card during bidding session.
         for value in self.deck_values:
             if value.find(self.dominant_colour) == -1:
                 pass
@@ -67,7 +61,6 @@ class Deck_class():
                 self.deck_values[value][1] = self.deck_values[value][1] + 0.25
 
     def deal(self):
-        #function used to pop cards out of deck and return to player hand(s)
         single_card = self.deck.pop()
         return single_card
 #--------------------------------------------------------------------- PLAYER HAND------------------------------------------------
@@ -78,12 +71,9 @@ class Hand():
         self.name = name
 
     def add_card(self,card):
-        #1. human adds cards to his hand from the deck (function connected to the deck class)
         self.cards[card_nr] = card
 
     def place_bid(self):
-        #1. player is given a question how many bids he wants to make in a session
-        #2. answer within game rules is inserted into bid_list
         bidding = 1
         while bidding == 1:
             try:
@@ -101,7 +91,6 @@ class Hand():
                 continue 
 
     def place_card(self):
-        #1. player is asked what card from his hand he wants to place:
         print('--------------------------------------------------------')
         print('Dominant Colour of this session: ', deck.dominant_colour)
         print('Dominant Colour of this round: ', round_colour[0])
@@ -116,14 +105,12 @@ class Hand():
                     print(self.cards)
                     print('invalid card, try again:')
                 elif self.cards[player_move] == 'Wizard' or self.cards[player_move] == 'Fool':
-                    #wizard and fool can be placed at all times
                     card_valid = True
                     break
     #------------------------------------Checks if user has no round colours in case he is using another colour-------------
                 elif round_colour[0] != 'None' and self.cards[player_move].split(']')[0].replace('[','') != round_colour[0]:
                     for card in self.cards.values():
                         if round_colour[0] in card:
-                            #round colour found in user deck, he is forced to use either colour card or wizard/fool
                             print('You must select the round colour card if you have one in your hand!')
                             card_valid = False
                             break
@@ -137,18 +124,15 @@ class Hand():
     
 #------------------------------------Placing the card-----------------------------------------------------------------------
         if card_valid == True: 
-            #card is put in the placed_card list which is then used to determined if newly put card is a winner.
             placed_card[0] = self.name 
             placed_card[1] = self.cards[player_move] 
             placed_card[2] = deck.deck_values[self.cards[player_move]][0]
             print(self.name, ' places: ',self.cards[player_move])
             if round_colour[0] == 'None' and self.cards[player_move].find('[') != -1:
-            #if there was no round colour and the placed card is coloured the round colour is updated
                 round_colour[0] = self.cards[player_move].split(']')[0].replace('[','')
             del self.cards[player_move] 
 
-
-#--------------------------------------------------------------------- COMPUTER HAND------------------------------------------------
+#--------------------------------------------------------------------- COMPUTER HAND----------------------------------------
 class Computer_Hand():
     def __init__(self,name):
         self.cards = []
@@ -156,11 +140,9 @@ class Computer_Hand():
         self.name = name
 
     def add_card(self,card):
-        #1. CPU adds cards to his hand from the deck (function connected to the deck class)
         self.cards.append(card)
     
     def place_bid(self):
-        #1.CPU evalutes all his cards and based on its value and % chance determines if he wants to bid on it.
         cp_bid = 0
         for card in self.cards:
             if random.random() < deck.deck_values[card][1]:
@@ -169,11 +151,6 @@ class Computer_Hand():
         print(self.name, ' bids ', cp_bid)
 
     def place_card(self): 
-        #CPU place_card function:
-        #1. defines what cards cpu can place in the round (cpu_round_cards list generated)
-        #2. defines min/max values of his cpu_round_cards.
-        #3. defines if CPU wants to win/lose, can cpu win/lose and takes the action (based on its score in the bid_list and the current winner score)
-        #4. round dominant colour determined.
         cpu_round_cards = []
         for cpu_card1 in self.cards:
             if round_colour[0] == 'None':
@@ -218,7 +195,7 @@ class Computer_Hand():
                         card_string  = cpu_card1[0]
                         placed_card[2] = deck.deck_values[card_string][0]
                         self.cards.remove(placed_card[1])
-                        print(self.name, 'places to win:', placed_card[1])
+                        print(self.name, 'bids:', placed_card[1])
                         break
             else:
                 #3.1.2 cpu wants to win but he cannot:
@@ -230,12 +207,10 @@ class Computer_Hand():
                         card_string  = cpu_card1[0]
                         placed_card[2] = deck.deck_values[card_string][0]
                         self.cards.remove(placed_card[1])
-                        print(self.name, 'places to lose:', placed_card[1])
+                        print(self.name, 'bids:', placed_card[1])
                         break                      
         else:
-            #print(self.name,' wants to lose')
-            #3.2 CPU wants to lose
-            #CPU is interested to place highest possible card without taking the win.
+            #3.2 CPU wants to lose(interested to place highest possible card without taking the win).
             cpu_less_than_w_card_val = None
             for cpu_card1 in cpu_round_cards:
                 if cpu_less_than_w_card_val == None:
@@ -251,48 +226,63 @@ class Computer_Hand():
                     placed_card[1] = cpu_card1[0]
                     card_string  = cpu_card1[0]
                     placed_card[2] = deck.deck_values[card_string][0]
-            print(self.name, 'places to lose:', placed_card[1])
+            print(self.name, 'bids:', placed_card[1])
         #4. round dominant colour is determined if it was not before and the placed card is coloured.
         if round_colour[0] == 'None' and card_string.find('[') != -1:
             round_colour[0] = card_string.split(']')[0].replace('[','')  
 
 def identify_winner():
-    #Function defines the current winner of the round.
-    #Runs everytime a new card is placed so the CPU knows the existing winner and can evaluate his option to go for win or loss.
-        if  winner[0] == 'test':
+        if  winner[0] == 'None':
             #first card in round, by default becomes winner.
             winner[0] = placed_card[0]
             winner[1] = placed_card[1]
             winner[2] = placed_card[2]
-            #print(winner)
         elif placed_card[2] == 50 and winner[2] != 50: 
             #user has wizard card and it has not been placed in this round yet.
             winner[0] = placed_card[0]
             winner[1] = placed_card[1]
             winner[2] = placed_card[2]
-            #print(winner)
         elif int(placed_card[2])  == 0 and int(placed_card[2]) == winner[2]:
             #user has fool card but it already has been placed.New placer becomes winner.
             winner[0] = placed_card[0]
             winner[1] = placed_card[1]
             winner[2] = placed_card[2]
-            #print(winner)
         elif deck.dominant_colour in placed_card[1] and int(placed_card[2])> winner[2]:
             #user has session colour card that is higher than current winner score
             winner[0] = placed_card[0]
             winner[1] = placed_card[1]
             winner[2] = placed_card[2]
-            #print(winner)
         elif round_colour[0] in placed_card[1] and int(placed_card[2]) > winner[2]:
             #user has round colour card that is higher than current winner score
             winner[0] = placed_card[0]
             winner[1] = placed_card[1]
             winner[2] = placed_card[2]
-            #print(winner)
+
+def session_players_reorder():
+    global player_list
+    for player in player_list:
+        if player[2] == len(player_list)-1:
+            #last player becomes first.
+            player[2] = 0
+        else:
+            #other players move by 1 point.
+            player[2] += 1
+    player_list = sorted(player_list, key=lambda x: x[2], reverse=False)     
+
+
+def total_score_updater():
+    for player in player_list:
+        player_name = player[0]
+        if bid_list[player_name][0] ==  bid_list[player_name][1]:
+            #player bid correctly, rewarded.
+            player[1] = player[1] + (bid_list[player_name][0]*20)+20
+        else:
+            #player bid incorrectly, points taken away.
+            diff = (abs(bid_list[player_name][0] - bid_list[player_name][1]))*10
+            player[1] = player[1] - diff
 
 def round_winner_reorder():
     global player_list
-    #this function reorders player_list after round (winner always starts first)
     i = 0
     for player in player_list:
         if player[0] == winner[0]:
@@ -310,33 +300,6 @@ def round_winner_reorder():
         player[3] = n
         n += 1
     player_list = sorted(player_list, key=lambda x: x[3], reverse=False)
-
-def session_players_reorder():
-    global player_list
-#this function reorders player_list after session (sequence incrementaly increases)
-    for player in player_list:
-        if player[2] == len(player_list)-1:
-            #last player becomes first.
-            player[2] = 0
-        else:
-            #other players move by 1 point.
-            player[2] += 1
-    player_list = sorted(player_list, key=lambda x: x[2], reverse=False)     
-
-
-def total_score_updater():
-    #function calculates the score and updates it in player_list based on bid_list.
-    #Run at the end of each session
-    for player in player_list:
-        player_name = player[0]
-        if bid_list[player_name][0] ==  bid_list[player_name][1]:
-            #player bid correctly, rewarded.
-            player[1] = player[1] + (bid_list[player_name][0]*20)+20
-        else:
-            #player bid incorrectly, points taken away.
-            diff = (abs(bid_list[player_name][0] - bid_list[player_name][1]))*10
-            player[1] = player[1] - diff
-
    
 #--------------------------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------GAME STARTS------------------------------------------------
@@ -370,7 +333,7 @@ while True:
         player_list.append([human_player,0,0,0,''])
         
         random.shuffle(CPU_names)
-        #Building the numbers for queueing
+        #Setting the numbers for queueing
         nr = 1
         while nr <= nr_players:
             player_list.append([CPU_names[nr], 0, nr, nr, ''])
@@ -379,22 +342,20 @@ while True:
             player_list[nr][3] = nr
             player_list[nr][4] = ''
             nr += 1
-        #print(player_list)
         print('Players!:')
         for player in player_list:
             print(player[0])
 
-        time.sleep(2)
+        time.sleep(1)
         total_sessions = int(60/len(player_list))
         print('Number of sessions in the game:', total_sessions)
         session_nr = 1     
-    
 #----------------------------------Deck initialize----------------------------------------------------------
         while session_nr <= total_sessions:
             deck = Deck_class() 
             deck.shuffle()
             #last session does not look for dominant, all deck is distributed.
-            if session_nr != total_sessions: 
+            if session_nr < total_sessions: 
                 deck.dominant_colour = deck.find_dominant()
             deck.evaluate_deck()
             print('--------------------------------------------------------------------------------')
@@ -407,8 +368,7 @@ while True:
                 if player[0] == human_player:
                     player[4] = Hand(player[0])
                 else:
-                    player[4] = Computer_Hand(player[0])
-            
+                    player[4] = Computer_Hand(player[0])         
             for player in player_list:
                 card_nr = 1
                 while card_nr <= session_nr:
@@ -416,20 +376,18 @@ while True:
                     card_nr += 1
     #------------------------------------------Bidding----------------------------------------------------------
             bid_list = {}
-
             for player in player_list:
                 player[4].place_bid()
                 time.sleep(1)
 
             print(bid_list)
-            time.sleep(2)
+            time.sleep(1)
             print('--------------------------------------------------------------------------------')    
     #------------------------------------------Round----------------------------------------------------------
-            #for i in session_nr:
             round_nr = 1
             while round_nr <= session_nr:
-                winner = ['test', 'test', 0]
-                placed_card = ['test', 'test', 0]
+                winner = ['None', 'None', 0]
+                placed_card = ['None', 'None', 0]
                 round_colour = ['None'] 
                 print('Round ', str(round_nr), ' begins!')
                 print('--------------------------------------------------------------------------------')
@@ -440,7 +398,6 @@ while True:
                     identify_winner()
                     time.sleep(1)
                 
-                #updating bid_list
                 winner2 = winner[0]
                 bid_list[winner2][1] = bid_list[winner2][1] +1
 
