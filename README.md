@@ -73,12 +73,14 @@ More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 
 #### session_players_reorder()
 * this function reorders player_list after session (sequence incrementaly increases)
+* last player becomes first.
+* other players move by 1 point.
 
 #### total_score_updater()
 * function calculates the score and updates it in player_list based on bid_list.
 * Run at the end of each session
 
-#### total_score_updater()
+#### round_winner_reorder()
 * this function reorders player_list after round (winner always starts first)
 
 
