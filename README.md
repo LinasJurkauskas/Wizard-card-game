@@ -67,5 +67,17 @@ More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 * round dominant colour determined.
 
 ### FUNCTIONS
-#### 1. identify_winner()
+####  identify_winner()
+* Function defines the current winner of the round.
+* Runs everytime a new card is placed so the CPU knows the existing winner and can evaluate his option to go for win or loss.
+
+#### session_players_reorder()
+* this function reorders player_list after session (sequence incrementaly increases)
+
+#### total_score_updater()
+* function calculates the score and updates it in player_list based on bid_list.
+* Run at the end of each session
+
+
+
 
