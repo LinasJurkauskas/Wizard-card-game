@@ -262,13 +262,10 @@ def session_players_reorder():
     global player_list
     for player in player_list:
         if player[2] == len(player_list)-1:
-            #last player becomes first.
             player[2] = 0
         else:
-            #other players move by 1 point.
             player[2] += 1
     player_list = sorted(player_list, key=lambda x: x[2], reverse=False)     
-
 
 def total_score_updater():
     for player in player_list:
@@ -286,7 +283,6 @@ def round_winner_reorder():
     i = 0
     for player in player_list:
         if player[0] == winner[0]:
-            #winner player gets ordered first - 0 value
             player[3] = 0
             break
         else:
