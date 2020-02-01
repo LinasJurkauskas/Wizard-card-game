@@ -1,10 +1,13 @@
+# used libraries
 import random
 import time
 import sys
 import copy
+#-- Other modules
 import Variables
 import DeckClass
 import PlayerHand
+import OrderFunctions
 
 #--------------------------------------------------------------------- PLAYER HAND------------------------------------------------
 class Hand():
@@ -201,8 +204,8 @@ def IdentifyWinner():
             winner[1] = placed_card[1]
             winner[2] = placed_card[2]
 
-def SessionPlayersReorder():
-    global player_list
+def SessionPlayersReorder(player_list):
+    #global player_list
     for player in player_list:
         if player[2] == len(player_list)-1:
             player[2] = 0
@@ -221,8 +224,8 @@ def total_score_updater():
             diff = (abs(bid_list[player_name][0] - bid_list[player_name][1]))*10
             player[1] = player[1] - diff
 
-def RoundWinnerReorder():
-    global player_list
+def RoundWinnerReorder(player_list):
+    #global player_list
     i = 0
     for player in player_list:
         if player[0] == winner[0]:
@@ -304,21 +307,17 @@ while True:
     #----------------------------------Hands----------------------------------------------------------
             for player in player_list:
                 if player[0] == human_player:
-                    print(player[0])
-                    player[4] = PlayerHand.Hand(player[0])
-                    #player[4] = PlayerHand.Hand(player[0])
-                    #print(player[4])
+                    player[4] = Hand(player[0])
                 else:
-                    player[4] = ComputerHand(player[0])   
-                    print(player[4])      
+                    player[4] = ComputerHand(player[0])       
             for player in player_list:
-                print(player)
+                #print(player)
                 card_nr = 1
                 while card_nr <= session_nr:
                     #print(deck.deck.pop())
                     #print(player[4].cards)
                     #player[4].cards[card_nr] = deck.deck.pop()
-                    player[4].AddCard(deck.pop(),card_nr)
+                    player[4].AddCard(deck.deck.pop(),card_nr)
                     #player[4].AddCard(deck.Deal())
                     card_nr += 1
                     #print(player[4].cards)
@@ -358,7 +357,7 @@ while True:
                 time.sleep(2)
                 
                 #reorder sequence based on winner
-                RoundWinnerReorder()
+                RoundWinnerReorder(player_list)
                 round_nr += 1
 #------------------------------------------------------------------------------------
             total_score_updater()
@@ -366,7 +365,7 @@ while True:
             print('Results: (sessions ,',session_nr,'/',total_sessions, ')')
             for player in player_list:
                 print(player[0], 'score: ', player[1],'bids/wins: ', bid_list[player[0]])
-            SessionPlayersReorder()
+            player_list = OrderFunctions.SessionReorder(player_list)
             #next session!  
             session_nr += 1  
             continue
