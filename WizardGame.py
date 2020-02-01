@@ -305,7 +305,7 @@ while True:
             for player in player_list:
                 if player[0] == human_player:
                     print(player[0])
-                    player[4] = PlayerHand.Hand('linas')
+                    player[4] = PlayerHand.Hand(player[0])
                     #player[4] = PlayerHand.Hand(player[0])
                     #print(player[4])
                 else:
@@ -318,7 +318,7 @@ while True:
                     #print(deck.deck.pop())
                     #print(player[4].cards)
                     #player[4].cards[card_nr] = deck.deck.pop()
-                    player[4].AddCard(WizardGame.deck.pop(),card_nr)
+                    player[4].AddCard(deck.pop(),card_nr)
                     #player[4].AddCard(deck.Deal())
                     card_nr += 1
                     #print(player[4].cards)
