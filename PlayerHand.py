@@ -29,8 +29,8 @@ class Hand():
 
     def PlaceCard(self):
         print('--------------------------------------------------------')
-        print('Dominant Colour of this session: ', deck.dominant_colour)
-        print('Dominant Colour of this round: ', round_colour[0])
+        print('Dominant Colour of this session: ', WizardGame.deck.dominant_colour)
+        print('Dominant Colour of this round: ', WizardGame.round_colour[0])
         print('Remaining cards in your hand:', self.cards)
         print('--------------------------------------------------------')
         card_valid = False
