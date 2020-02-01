@@ -2,67 +2,44 @@ import random
 import time
 import sys
 import copy
-#---------------------------------------------------------Wizard Card Game--------------------------------------------------------------------
-colours = ('Red', 'Blue', 'Green', 'Yellow')
-cards = ['[Red] Peasant, 1','[Red] Archer, 2','[Red] Fighter, 3','[Red] Defender, 4', '[Red] Warrior, 5','[Red] Seargeant, 6','[Red] Captain, 7','[Red] Lieutenant, 8','[Red] Sage, 9', '[Red] Advisory, 10', '[Red] Prince, 11','[Red] Queen, 12', '[Red] King, 13',
-             '[Blue] Peasant, 1','[Blue] Archer, 2','[Blue] Fighter, 3','[Blue] Defender, 4', '[Blue] Warrior, 5','[Blue] Seargeant, 6','[Blue] Captain, 7','[Blue] Lieutenant, 8','[Blue] Sage, 9', '[Blue] Advisory, 10', '[Blue] Prince, 11','[Blue] Queen, 12', '[Blue] King, 13',
-              '[Green] Peasant, 1','[Green] Archer, 2','[Green] Fighter, 3','[Green] Defender, 4', '[Green] Warrior, 5','[Green] Seargeant, 6','[Green] Captain, 7','[Green] Lieutenant, 8','[Green] Sage, 9', '[Green] Advisory, 10', '[Green] Prince, 11','[Green] Queen, 12', '[Green] King, 13',
-              '[Yellow] Peasant, 1','[Yellow] Archer, 2','[Yellow] Fighter, 3','[Yellow] Defender, 4', '[Yellow] Warrior, 5','[Yellow] Seargeant, 6','[Yellow] Captain, 7','[Yellow] Lieutenant, 8','[Yellow] Sage, 9', '[Yellow] Advisory, 10', '[Yellow] Prince, 11','[Yellow] Queen, 12', '[Yellow] King, 13',
-              'Wizard', 'Wizard','Wizard', 'Wizard',
-              'Fool', 'Fool','Fool', 'Fool',
-             ]
-cards_values = {'[Red] Peasant, 1':[1, 0.05],'[Red] Archer, 2':[2, 0.1],'[Red] Fighter, 3':[3, 0.15],'[Red] Defender, 4':[4, 0.2], '[Red] Warrior, 5':[5, 0.25],
-                '[Red] Seargeant, 6':[6, 0.3],'[Red] Captain, 7':[7, 0.35],'[Red] Lieutenant, 8':[8, 0.4],'[Red] Sage, 9':[9, 0.5], '[Red] Advisory, 10':[10, 0.55], 
-                '[Red] Prince, 11':[11, 0.6],'[Red] Queen, 12':[12, 0.65], '[Red] King, 13':[13, 0.7],
-                '[Blue] Peasant, 1':[1, 0.05],'[Blue] Archer, 2':[2, 0.1],'[Blue] Fighter, 3':[3, 0.15],'[Blue] Defender, 4':[4, 0.2], '[Blue] Warrior, 5':[5, 0.25],
-                '[Blue] Seargeant, 6':[6, 0.3],'[Blue] Captain, 7':[7, 0.35],'[Blue] Lieutenant, 8':[8, 0.4],'[Blue] Sage, 9':[9, 0.5], '[Blue] Advisory, 10':[10, 0.55] ,
-                '[Blue] Prince, 11':[11, 0.6],'[Blue] Queen, 12':[12, 0.65], '[Blue] King, 13':[13, 0.7],
-                '[Green] Peasant, 1':[1, 0.05],'[Green] Archer, 2':[2, 0.1],'[Green] Fighter, 3':[3, 0.15],'[Green] Defender, 4':[4, 0.2], '[Green] Warrior, 5':[5, 0.25],
-                '[Green] Seargeant, 6':[6, 0.3],'[Green] Captain, 7':[7, 0.35],'[Green] Lieutenant, 8':[8, 0.4],'[Green] Sage, 9':[9, 0.5], '[Green] Advisory, 10':[10, 0.55] ,
-                '[Green] Prince, 11':[11, 0.6],'[Green] Queen, 12':[12, 0.65], '[Green] King, 13':[13, 0.7],
-                '[Yellow] Peasant, 1':[1, 0.05],'[Yellow] Archer, 2':[2, 0.1],'[Yellow] Fighter, 3':[3, 0.15],'[Yellow] Defender, 4':[4, 0.2], '[Yellow] Warrior, 5':[5, 0.25],
-                '[Yellow] Seargeant, 6':[6, 0.3],'[Yellow] Captain, 7':[7, 0.35],'[Yellow] Lieutenant, 8':[8, 0.4],'[Yellow] Sage, 9':[9, 0.5], '[Yellow] Advisory, 10':[10, 0.55] ,
-                '[Yellow] Prince, 11':[11, 0.6],'[Yellow] Queen, 12':[12, 0.65], '[Yellow] King, 13':[13, 0.7],
-                'Wizard':[50,1],'Fool':[0,0],
-                  }
-
-CPU_names = ['Gendalf', 'Dumbledoure', 'Severus Snape', 'Saruman', 'Sauron', 'Harry Potter', 'Hermione', 'Doctor Strange']
+import Variables
+import DeckClass
 
 #---------------------------------------------------------------------DECK------------------------------------------------
-class DeckClass():
+# class DeckClass():
 
-    def __init__(self):
-        self.dominant_colour = ''
-        self.dominant_card = ''
-        self.deck = []
-        self.deck_values = {}
-        self.deck_values = copy.deepcopy(cards_values)
-        for card in cards:
-            self.deck.append(card)
+#     def __init__(self):
+#         self.dominant_colour = ''
+#         self.dominant_card = ''
+#         self.deck = []
+#         self.deck_values = {}
+#         self.deck_values = copy.deepcopy(Variables.cards_values)
+#         for card in Variables.cards:
+#             self.deck.append(card)
 
-    def Shuffle(self):
-        random.shuffle(self.deck)
+#     def Shuffle(self):
+#         random.shuffle(self.deck)
 
-    def FindDominant(self):
-        self.dominant_card = str(self.deck.pop())
-        if self.dominant_card.find('[') == -1:
-            self.dominant_colour = 'None'
-        else:
-            colour_list = self.dominant_card.split(']')
-            self.dominant_colour = colour_list[0].replace('[','')
-        return self.dominant_colour
+#     def FindDominant(self):
+#         self.dominant_card = str(self.deck.pop())
+#         if self.dominant_card.find('[') == -1:
+#             self.dominant_colour = 'None'
+#         else:
+#             colour_list = self.dominant_card.split(']')
+#             self.dominant_colour = colour_list[0].replace('[','')
+#         return self.dominant_colour
 
-    def EvaluateDeck(self):
-        for value in self.deck_values:
-            if value.find(self.dominant_colour) == -1:
-                pass
-            else:
-                self.deck_values[value][0] = self.deck_values[value][0] + 20
-                self.deck_values[value][1] = self.deck_values[value][1] + 0.25
+#     def EvaluateDeck(self):
+#         for value in self.deck_values:
+#             if value.find(self.dominant_colour) == -1:
+#                 pass
+#             else:
+#                 self.deck_values[value][0] = self.deck_values[value][0] + 20
+#                 self.deck_values[value][1] = self.deck_values[value][1] + 0.25
 
-    def Deal(self):
-        single_card = self.deck.pop()
-        return single_card
+#     def Deal(self):
+#         single_card = self.deck.pop()
+#         return single_card
 #--------------------------------------------------------------------- PLAYER HAND------------------------------------------------
 class Hand():
     def __init__(self,name):
@@ -327,12 +304,11 @@ while True:
 #-------------------------------------------------------------------------------------------------------------------
         player_list = [] 
         player_list.append([human_player,0,0,0,''])
-        
-        random.shuffle(CPU_names)
+        random.shuffle(Variables.computer_names)
         #Setting the numbers for queueing
         nr = 1
         while nr <= nr_players:
-            player_list.append([CPU_names[nr], 0, nr, nr, ''])
+            player_list.append([Variables.computer_names[nr], 0, nr, nr, ''])
             player_list[nr][1] = 0
             player_list[nr][2] = nr
             player_list[nr][3] = nr
@@ -348,7 +324,7 @@ while True:
         session_nr = 1     
 #----------------------------------Deck initialize----------------------------------------------------------
         while session_nr <= total_sessions:
-            deck = DeckClass() 
+            deck = DeckClass.DeckClass() 
             deck.Shuffle()
             #last session does not look for dominant, all deck is distributed.
             if session_nr < total_sessions: 
