@@ -2,10 +2,12 @@ import Variables
 import random
 import copy
 
-#---------------------------------------------------------------------DECK------------------------------------------------
 class DeckClass():
 
     def __init__(self):
+        '''
+        See ReadMe Classes - 1.
+        '''
         self.dominant_colour = ''
         self.dominant_card = ''
         self.deck = []
