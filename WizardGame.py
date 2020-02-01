@@ -8,6 +8,7 @@ import Variables
 import DeckClass
 import PlayerHand
 import OrderFunctions
+import HandFunctions
 
 #--------------------------------------------------------------------- PLAYER HAND------------------------------------------------
 class Hand():
@@ -97,30 +98,8 @@ class ComputerHand():
         print(self.name, ' bids ', cp_bid)
 
     def PlaceCard(self): 
-        cpu_round_cards = []
-        for cpu_card1 in self.cards:
-            if round_colour[0] == 'None':
-                #1.1 no round dominant colour yet, all cards can be used:
-                cpu_round_cards.append([cpu_card1, deck.deck_values[cpu_card1][0]])
-                #1.2 wizard and fool can be used all the time:
-            elif cpu_card1 == 'Wizard' or cpu_card1 == 'Fool':
-                cpu_round_cards.append([cpu_card1, deck.deck_values[cpu_card1][0]])
-            elif round_colour[0] != 'None':
-                #1.3 round dominant colour exists, if cpu has card in deck he is limited to only using round dominant colour.
-                cpu_w_dominant_colour = 0
-                #1.3.1checks if cpu player has dominant colour
-                for cpu_card2 in self.cards:
-                    if round_colour[0] in cpu_card2:
-                        cpu_w_dominant_colour = 1
-                #1.3.2 if cpu has no round dominant all cards can be placed.Else only the round dominant ones
-                if cpu_w_dominant_colour == 0 or round_colour[0] in cpu_card1:
-                    if round_colour[0] in cpu_card1 or deck.dominant_colour in cpu_card1:
-                        #1.3.2.1 if card is session or round dominant, it retains its value
-                        cpu_round_cards.append([cpu_card1, deck.deck_values[cpu_card1][0]])
-                    else: #1.3.2.2 other colour cards can be added but they have no value
-                        cpu_round_cards.append([cpu_card1, 1])
-                else:
-                    pass    
+        cpu_round_cards = HandFunctions.get_av_cards(self.cards, round_colour[0], deck.dominant_colour)
+        print(cpu_round_cards)  
         #2 Define max/min values
         cpu_cards_min_val = None
         cpu_cards_max_val = None
@@ -200,7 +179,7 @@ while True:
                     continue
                 else:
                     print("let's go!")
-                    time.sleep(2)
+                    #time.sleep(2)
                     break
             except:
                 print('invalid number of players!')
@@ -222,7 +201,7 @@ while True:
         for player in player_list:
             print(player[0])
 
-        time.sleep(1)
+        #time.sleep(1)
         total_sessions = int(60/len(player_list))
         print('Number of sessions in the game:', total_sessions)
         session_nr = 1     
@@ -236,7 +215,7 @@ while True:
             deck.EvaluateDeck()
             print('--------------------------------------------------------------------------------')
             print('Session ', session_nr,'out of ',total_sessions, ' begins!')
-            time.sleep(2)
+            #time.sleep(2)
             print('This Session dominates: ',deck.dominant_card)
             print('--------------------------------------------------------------------------------')
     #----------------------------------Hands----------------------------------------------------------
@@ -260,10 +239,10 @@ while True:
             bid_list = {}
             for player in player_list:
                 player[4].PlaceBid()
-                time.sleep(1)
+                #time.sleep(1)
 
             print(bid_list)
-            time.sleep(1)
+            #time.sleep(1)
             print('--------------------------------------------------------------------------------')    
     #------------------------------------------Round----------------------------------------------------------
             round_nr = 1
@@ -273,12 +252,12 @@ while True:
                 round_colour = ['None'] 
                 print('Round ', str(round_nr), ' begins!')
                 print('--------------------------------------------------------------------------------')
-                time.sleep(2)
+               # time.sleep(2)
 #------------------------------------------Placing cards----------------------------------------                
                 for player in player_list:
                     player[4].PlaceCard()
                     winner = OrderFunctions.find_winner(winner, placed_card, round_colour[0], deck.dominant_colour)
-                    time.sleep(1)
+                    #time.sleep(1)
                 
                 winner2 = winner[0]
                 bid_list[winner2][1] = bid_list[winner2][1] +1
@@ -289,7 +268,7 @@ while True:
                 print('--------------------------------------------------------------------------------')
                 print('Score of this session:')
                 print(bid_list)
-                time.sleep(2)
+                #time.sleep(2)
                 
                 #reorder sequence based on winner
                 player_list = OrderFunctions.round_reorder(player_list, winner[0])
@@ -298,7 +277,7 @@ while True:
             #player_list = OrderFunctions.score_updater(player_list)
             #total_score_updater()
             OrderFunctions.score_updater(player_list, bid_list)
-            time.sleep(2)    
+            #time.sleep(2)    
             print('Results: (sessions ,',session_nr,'/',total_sessions, ')')
             for player in player_list:
                 print(player[0], 'score: ', player[1],'bids/wins: ', bid_list[player[0]])
