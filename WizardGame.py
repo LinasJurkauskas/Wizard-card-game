@@ -177,71 +177,6 @@ class ComputerHand():
         if round_colour[0] == 'None' and card_string.find('[') != -1:
             round_colour[0] = card_string.split(']')[0].replace('[','')  
 
-def IdentifyWinner():
-        if  winner[0] == 'None':
-            #first card in round, by default becomes winner.
-            winner[0] = placed_card[0]
-            winner[1] = placed_card[1]
-            winner[2] = placed_card[2]
-        elif placed_card[2] == 50 and winner[2] != 50: 
-            #user has wizard card and it has not been placed in this round yet.
-            winner[0] = placed_card[0]
-            winner[1] = placed_card[1]
-            winner[2] = placed_card[2]
-        elif int(placed_card[2])  == 0 and int(placed_card[2]) == winner[2]:
-            #user has fool card but it already has been placed.New placer becomes winner.
-            winner[0] = placed_card[0]
-            winner[1] = placed_card[1]
-            winner[2] = placed_card[2]
-        elif deck.dominant_colour in placed_card[1] and int(placed_card[2])> winner[2]:
-            #user has session colour card that is higher than current winner score
-            winner[0] = placed_card[0]
-            winner[1] = placed_card[1]
-            winner[2] = placed_card[2]
-        elif round_colour[0] in placed_card[1] and int(placed_card[2]) > winner[2]:
-            #user has round colour card that is higher than current winner score
-            winner[0] = placed_card[0]
-            winner[1] = placed_card[1]
-            winner[2] = placed_card[2]
-
-def SessionPlayersReorder(player_list):
-    #global player_list
-    for player in player_list:
-        if player[2] == len(player_list)-1:
-            player[2] = 0
-        else:
-            player[2] += 1
-    player_list = sorted(player_list, key=lambda x: x[2], reverse=False)     
-
-def total_score_updater():
-    for player in player_list:
-        player_name = player[0]
-        if bid_list[player_name][0] ==  bid_list[player_name][1]:
-            #player bid correctly, rewarded.
-            player[1] = player[1] + (bid_list[player_name][0]*20)+20
-        else:
-            #player bid incorrectly, points taken away.
-            diff = (abs(bid_list[player_name][0] - bid_list[player_name][1]))*10
-            player[1] = player[1] - diff
-
-def RoundWinnerReorder(player_list):
-    #global player_list
-    i = 0
-    for player in player_list:
-        if player[0] == winner[0]:
-            player[3] = 0
-            break
-        else:
-            i += 1
-    n = 0
-    for player in player_list[i:]:
-        player[3] = n
-        n += 1
-
-    for player in player_list[:i]:
-        player[3] = n
-        n += 1
-    player_list = sorted(player_list, key=lambda x: x[3], reverse=False)
    
 #--------------------------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------GAME STARTS------------------------------------------------
@@ -342,7 +277,7 @@ while True:
 #------------------------------------------Placing cards----------------------------------------                
                 for player in player_list:
                     player[4].PlaceCard()
-                    IdentifyWinner()
+                    winner = OrderFunctions.find_winner(winner, placed_card, round_colour[0], deck.dominant_colour)
                     time.sleep(1)
                 
                 winner2 = winner[0]
@@ -357,15 +292,17 @@ while True:
                 time.sleep(2)
                 
                 #reorder sequence based on winner
-                RoundWinnerReorder(player_list)
+                player_list = OrderFunctions.round_reorder(player_list, winner[0])
                 round_nr += 1
 #------------------------------------------------------------------------------------
-            total_score_updater()
+            #player_list = OrderFunctions.score_updater(player_list)
+            #total_score_updater()
+            OrderFunctions.score_updater(player_list, bid_list)
             time.sleep(2)    
             print('Results: (sessions ,',session_nr,'/',total_sessions, ')')
             for player in player_list:
                 print(player[0], 'score: ', player[1],'bids/wins: ', bid_list[player[0]])
-            player_list = OrderFunctions.SessionReorder(player_list)
+            player_list = OrderFunctions.session_reorder(player_list)
             #next session!  
             session_nr += 1  
             continue
