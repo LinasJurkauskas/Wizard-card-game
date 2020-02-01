@@ -195,7 +195,7 @@ class Computer_Hand():
                         card_string  = cpu_card1[0]
                         placed_card[2] = deck.deck_values[card_string][0]
                         self.cards.remove(placed_card[1])
-                        print(self.name, 'bids:', placed_card[1])
+                        print(self.name, 'places:', placed_card[1])
                         break
             else:
                 #3.1.2 cpu wants to win but he cannot:
@@ -207,7 +207,7 @@ class Computer_Hand():
                         card_string  = cpu_card1[0]
                         placed_card[2] = deck.deck_values[card_string][0]
                         self.cards.remove(placed_card[1])
-                        print(self.name, 'bids:', placed_card[1])
+                        print(self.name, 'places:', placed_card[1])
                         break                      
         else:
             #3.2 CPU wants to lose(interested to place highest possible card without taking the win).
@@ -226,7 +226,7 @@ class Computer_Hand():
                     placed_card[1] = cpu_card1[0]
                     card_string  = cpu_card1[0]
                     placed_card[2] = deck.deck_values[card_string][0]
-            print(self.name, 'bids:', placed_card[1])
+            print(self.name, 'places:', placed_card[1])
         #4. round dominant colour is determined if it was not before and the placed card is coloured.
         if round_colour[0] == 'None' and card_string.find('[') != -1:
             round_colour[0] = card_string.split(']')[0].replace('[','')  
