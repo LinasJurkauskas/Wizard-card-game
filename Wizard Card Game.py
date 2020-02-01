@@ -29,7 +29,7 @@ cards_values = {'[Red] Peasant, 1':[1, 0.05],'[Red] Archer, 2':[2, 0.1],'[Red] F
 CPU_names = ['Gendalf', 'Dumbledoure', 'Severus Snape', 'Saruman', 'Sauron', 'Harry Potter', 'Hermione', 'Doctor Strange']
 
 #---------------------------------------------------------------------DECK------------------------------------------------
-class Deck_class():
+class DeckClass():
 
     def __init__(self):
         self.dominant_colour = ''
@@ -40,10 +40,10 @@ class Deck_class():
         for card in cards:
             self.deck.append(card)
 
-    def shuffle(self):
+    def Shuffle(self):
         random.shuffle(self.deck)
 
-    def find_dominant(self):
+    def FindDominant(self):
         self.dominant_card = str(self.deck.pop())
         if self.dominant_card.find('[') == -1:
             self.dominant_colour = 'None'
@@ -52,7 +52,7 @@ class Deck_class():
             self.dominant_colour = colour_list[0].replace('[','')
         return self.dominant_colour
 
-    def evaluate_deck(self):
+    def EvaluateDeck(self):
         for value in self.deck_values:
             if value.find(self.dominant_colour) == -1:
                 pass
@@ -60,7 +60,7 @@ class Deck_class():
                 self.deck_values[value][0] = self.deck_values[value][0] + 20
                 self.deck_values[value][1] = self.deck_values[value][1] + 0.25
 
-    def deal(self):
+    def Deal(self):
         single_card = self.deck.pop()
         return single_card
 #--------------------------------------------------------------------- PLAYER HAND------------------------------------------------
@@ -70,10 +70,10 @@ class Hand():
         self.bid = 0
         self.name = name
 
-    def add_card(self,card):
+    def AddCard(self,card):
         self.cards[card_nr] = card
 
-    def place_bid(self):
+    def PlaceBid(self):
         bidding = 1
         while bidding == 1:
             try:
@@ -90,7 +90,7 @@ class Hand():
                 print('invalid number provided!')
                 continue 
 
-    def place_card(self):
+    def PlaceCard(self):
         print('--------------------------------------------------------')
         print('Dominant Colour of this session: ', deck.dominant_colour)
         print('Dominant Colour of this round: ', round_colour[0])
@@ -133,16 +133,16 @@ class Hand():
             del self.cards[player_move] 
 
 #--------------------------------------------------------------------- COMPUTER HAND----------------------------------------
-class Computer_Hand():
+class ComputerHand():
     def __init__(self,name):
         self.cards = []
         self.bid = 0
         self.name = name
 
-    def add_card(self,card):
+    def AddCard(self,card):
         self.cards.append(card)
     
-    def place_bid(self):
+    def PlaceBid(self):
         cp_bid = 0
         for card in self.cards:
             if random.random() < deck.deck_values[card][1]:
@@ -150,7 +150,7 @@ class Computer_Hand():
         bid_list[self.name] = [cp_bid,0]
         print(self.name, ' bids ', cp_bid)
 
-    def place_card(self): 
+    def PlaceCard(self): 
         cpu_round_cards = []
         for cpu_card1 in self.cards:
             if round_colour[0] == 'None':
@@ -231,7 +231,7 @@ class Computer_Hand():
         if round_colour[0] == 'None' and card_string.find('[') != -1:
             round_colour[0] = card_string.split(']')[0].replace('[','')  
 
-def identify_winner():
+def IdentifyWinner():
         if  winner[0] == 'None':
             #first card in round, by default becomes winner.
             winner[0] = placed_card[0]
@@ -258,7 +258,7 @@ def identify_winner():
             winner[1] = placed_card[1]
             winner[2] = placed_card[2]
 
-def session_players_reorder():
+def SessionPlayersReorder():
     global player_list
     for player in player_list:
         if player[2] == len(player_list)-1:
@@ -278,7 +278,7 @@ def total_score_updater():
             diff = (abs(bid_list[player_name][0] - bid_list[player_name][1]))*10
             player[1] = player[1] - diff
 
-def round_winner_reorder():
+def RoundWinnerReorder():
     global player_list
     i = 0
     for player in player_list:
@@ -348,12 +348,12 @@ while True:
         session_nr = 1     
 #----------------------------------Deck initialize----------------------------------------------------------
         while session_nr <= total_sessions:
-            deck = Deck_class() 
-            deck.shuffle()
+            deck = DeckClass() 
+            deck.Shuffle()
             #last session does not look for dominant, all deck is distributed.
             if session_nr < total_sessions: 
-                deck.dominant_colour = deck.find_dominant()
-            deck.evaluate_deck()
+                deck.dominant_colour = deck.FindDominant()
+            deck.EvaluateDeck()
             print('--------------------------------------------------------------------------------')
             print('Session ', session_nr,'out of ',total_sessions, ' begins!')
             time.sleep(2)
@@ -364,16 +364,16 @@ while True:
                 if player[0] == human_player:
                     player[4] = Hand(player[0])
                 else:
-                    player[4] = Computer_Hand(player[0])         
+                    player[4] = ComputerHand(player[0])         
             for player in player_list:
                 card_nr = 1
                 while card_nr <= session_nr:
-                    player[4].add_card(deck.deal())
+                    player[4].AddCard(deck.Deal())
                     card_nr += 1
     #------------------------------------------Bidding----------------------------------------------------------
             bid_list = {}
             for player in player_list:
-                player[4].place_bid()
+                player[4].PlaceBid()
                 time.sleep(1)
 
             print(bid_list)
@@ -390,8 +390,8 @@ while True:
                 time.sleep(2)
 #------------------------------------------Placing cards----------------------------------------                
                 for player in player_list:
-                    player[4].place_card()
-                    identify_winner()
+                    player[4].PlaceCard()
+                    IdentifyWinner()
                     time.sleep(1)
                 
                 winner2 = winner[0]
@@ -406,7 +406,7 @@ while True:
                 time.sleep(2)
                 
                 #reorder sequence based on winner
-                round_winner_reorder()
+                RoundWinnerReorder()
                 round_nr += 1
 #------------------------------------------------------------------------------------
             total_score_updater()
@@ -414,7 +414,7 @@ while True:
             print('Results: (sessions ,',session_nr,'/',total_sessions, ')')
             for player in player_list:
                 print(player[0], 'score: ', player[1],'bids/wins: ', bid_list[player[0]])
-            session_players_reorder()
+            SessionPlayersReorder()
             #next session!  
             session_nr += 1  
             continue
