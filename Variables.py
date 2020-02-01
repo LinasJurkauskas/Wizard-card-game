@@ -25,4 +25,5 @@ cards_values = {'[Red] Peasant, 1':[1, 0.05],'[Red] Archer, 2':[2, 0.1],'[Red] F
                 'Wizard':[50,1],'Fool':[0,0],
                   }
 
-CPU_names = ['Gendalf', 'Dumbledoure', 'Severus Snape', 'Saruman', 'Sauron', 'Harry Potter', 'Hermione', 'Doctor Strange', ]
+computer_names = ['Gendalf', 'Dumbledoure', 'Severus Snape', 'Saruman', 'Sauron', 'Harry Potter', 'Hermione', 'Doctor Strange', ]
+
