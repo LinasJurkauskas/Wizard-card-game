@@ -98,63 +98,31 @@ class ComputerHand():
         print(self.name, ' bids ', cp_bid)
 
     def PlaceCard(self): 
-        cpu_round_cards = HandFunctions.get_av_cards(self.cards, round_colour[0], deck.dominant_colour)
-        print(cpu_round_cards)  
-        #2 Define max/min values
-        cpu_cards_min_val = None
-        cpu_cards_max_val = None
-        for cpu_card3 in cpu_round_cards:     
-            if cpu_cards_min_val == None or cpu_cards_min_val > cpu_card3[1]:
-                cpu_cards_min_val = cpu_card3[1]
-            if cpu_cards_max_val == None or cpu_cards_max_val < cpu_card3[1]:
-                cpu_cards_max_val = cpu_card3[1]
+        available_cards = HandFunctions.get_av_cards(self.cards, round_colour[0], deck.dominant_colour)
+        max_val = max(card[1] for card in available_cards)
+
         #3.defines if cpu wants to win
         if bid_list[self.name][0] > bid_list[self.name][1]:
-            if cpu_cards_max_val > winner[2]:
+            if max_val > winner[2]:
                 #3.1.1cpu wants to win and can win:
-                for cpu_card1 in cpu_round_cards:
-                    if cpu_card1[1] == cpu_cards_max_val:
-                        #max value card is used:
-                        placed_card[0] = self.name 
-                        placed_card[1] = cpu_card1[0]
-                        card_string  = cpu_card1[0]
-                        placed_card[2] = deck.deck_values[card_string][0]
-                        self.cards.remove(placed_card[1])
-                        print(self.name, 'places:', placed_card[1])
-                        break
+                card = HandFunctions.find_win_card(available_cards,winner[2])
+                placed_card = HandFunctions.place_card(self.name,card)
+                self.cards.remove(placed_card[1])
             else:
                 #3.1.2 cpu wants to win but he cannot:
-                for cpu_card1 in cpu_round_cards:
-                    if cpu_card1[1] == cpu_cards_min_val:
-                        #min value card is used:
-                        placed_card[0] = self.name 
-                        placed_card[1] = cpu_card1[0]
-                        card_string  = cpu_card1[0]
-                        placed_card[2] = deck.deck_values[card_string][0]
-                        self.cards.remove(placed_card[1])
-                        print(self.name, 'places:', placed_card[1])
-                        break                      
+                card = HandFunctions.find_min_loss_card(available_cards)
+                placed_card = HandFunctions.place_card(self.name,card)
+                self.cards.remove(placed_card[1])                          
         else:
-            #3.2 CPU wants to lose(interested to place highest possible card without taking the win).
-            cpu_less_than_w_card_val = None
-            for cpu_card1 in cpu_round_cards:
-                if cpu_less_than_w_card_val == None:
-                    cpu_less_than_w_card_val = cpu_card1[1]
-                    placed_card[0] = self.name 
-                    placed_card[1] = cpu_card1[0]
-                    card_string  = cpu_card1[0]
-                    placed_card[2] = deck.deck_values[card_string][0]
-            #checks if next card is higher than the existing but still lower than the currenct winner card
-                elif cpu_less_than_w_card_val < cpu_card1[1] and cpu_card1[1] < winner[2]:
-                    cpu_less_than_w_card_val = cpu_card1[1]
-                    placed_card[0] = self.name 
-                    placed_card[1] = cpu_card1[0]
-                    card_string  = cpu_card1[0]
-                    placed_card[2] = deck.deck_values[card_string][0]
-            print(self.name, 'places:', placed_card[1])
+            #3.2 CPU wants to lose:
+            card = HandFunctions.find_max_loss_card(available_cards,winner[2])
+            placed_card = HandFunctions.place_card(self.name,card)
+            self.cards.remove(placed_card[1]) 
+
+        print(self.name, 'places:', placed_card[1])
         #4. round dominant colour is determined if it was not before and the placed card is coloured.
-        if round_colour[0] == 'None' and card_string.find('[') != -1:
-            round_colour[0] = card_string.split(']')[0].replace('[','')  
+        if round_colour[0] == 'None' and placed_card[1].find('[') != -1:
+            round_colour[0] = placed_card[1].split(']')[0].replace('[','')  
 
    
 #--------------------------------------------------------------------------------------------------------------------------------
