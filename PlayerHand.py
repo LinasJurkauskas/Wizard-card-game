@@ -1,6 +1,8 @@
-import DeckClass
-import WizardGame
+import WizardGame as Main
+import HandFunctions as HF
 
+
+#--------------------------------------------------------------------- PLAYER HAND------------------------------------------------
 class Hand():
     def __init__(self,name):
         self.cards = {}
@@ -28,9 +30,10 @@ class Hand():
                 continue 
 
     def PlaceCard(self):
+        placed_card = []
         print('--------------------------------------------------------')
-        print('Dominant Colour of this session: ', WizardGame.deck.dominant_colour)
-        print('Dominant Colour of this round: ', WizardGame.round_colour[0])
+        print('Dominant Colour of this session: ', Main.deck.dominant_colour)
+        print('Dominant Colour of this round: ', Main.round_colour[0])
         print('Remaining cards in your hand:', self.cards)
         print('--------------------------------------------------------')
         card_valid = False
@@ -58,13 +61,12 @@ class Hand():
             except:
                 print('invalid key provided!')
                 continue 
-    
 #------------------------------------Placing the card-----------------------------------------------------------------------
         if card_valid == True: 
-            placed_card[0] = self.name 
-            placed_card[1] = self.cards[player_move] 
-            placed_card[2] = deck.deck_values[self.cards[player_move]][0]
+            HF.place_card(self.name, [self.cards[player_move], Main.deck.deck_values[self.cards[player_move]][0]])
+            # placed_card[0] = self.name 
+            # placed_card[1] = self.cards[player_move] 
+            # placed_card[2] = deck.deck_values[self.cards[player_move]][0]
             print(self.name, ' places: ',self.cards[player_move])
-            if round_colour[0] == 'None' and self.cards[player_move].find('[') != -1:
-                round_colour[0] = self.cards[player_move].split(']')[0].replace('[','')
-            del self.cards[player_move] 
+            del self.cards[player_move]
+            return placed_card
