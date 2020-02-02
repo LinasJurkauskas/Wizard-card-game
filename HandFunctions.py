@@ -1,10 +1,10 @@
-import WizardGame
-import DeckClass
+#import DeckClass
 import random
 import copy
 
 
 def get_av_cards(cards,round_colour, dominant_colour):
+    import WizardGame as Main
     '''
     creates a temporary list of all available cards in player hand
     list is later on used to define which card to place
@@ -13,10 +13,10 @@ def get_av_cards(cards,round_colour, dominant_colour):
     for card in cards:
         if round_colour == 'None':
             #1.1 no round dominant colour yet, all cards can be used:
-            available_cards.append([card, WizardGame.deck.deck_values[card][0]])
+            available_cards.append([card, Main.deck.deck_values[card][0]])
             #1.2 wizard and fool can be used all the time:
         elif card == 'Wizard' or card == 'Fool':
-            available_cards.append([card, WizardGame.deck.deck_values[card][0]])
+            available_cards.append([card, Main.deck.deck_values[card][0]])
         elif round_colour != 'None':
             #1.3 round dominant colour exists, if cpu has card in deck he is limited to only using round dominant colour.
             nr_w_dominant_colour = 0
@@ -28,7 +28,7 @@ def get_av_cards(cards,round_colour, dominant_colour):
             if nr_w_dominant_colour == 0 or round_colour in card:
                 if round_colour in card or dominant_colour in card:
                     #1.3.2.1 if card is session or round dominant, it retains its value
-                    available_cards.append([card, WizardGame.deck.deck_values[card][0]])
+                    available_cards.append([card, Main.deck.deck_values[card][0]])
                 else: #1.3.2.2 other colour cards can be added but they have no value
                     available_cards.append([card, 1])
             else:
