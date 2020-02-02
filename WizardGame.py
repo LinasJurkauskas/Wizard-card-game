@@ -6,119 +6,10 @@ import copy
 #-- Other modules
 import Variables
 import DeckClass
-import PlayerHand
+import PlayerHand as PH
 import ComputerHand
 import OrderFunctions as OF
 import HandFunctions as HF
-
-#--------------------------------------------------------------------- PLAYER HAND------------------------------------------------
-class Hand():
-    def __init__(self,name):
-        self.cards = {}
-        self.bid = 0
-        self.name = name
-
-    def AddCard(self,card,card_nr):
-        self.cards[card_nr] = card
-
-    def PlaceBid(self):
-        bidding = 1
-        while bidding == 1:
-            try:
-                print('your cards:', self.cards)
-                input_bid = int(input('Make a bid on how many rounds you expect to win: ')) 
-                if input_bid > session_nr:
-                    print("Can't bid more than there are rounds in this session!")
-                else:
-                        self.bid = int(input_bid)
-                        bid_list[self.name] = [int(input_bid),0]
-                        print(self.name, ' bids ', bid_list[self.name][0] )
-                        break
-            except:
-                print('invalid number provided!')
-                continue 
-
-    def PlaceCard(self):
-        print('--------------------------------------------------------')
-        print('Dominant Colour of this session: ', deck.dominant_colour)
-        print('Dominant Colour of this round: ', round_colour[0])
-        print('Remaining cards in your hand:', self.cards)
-        print('--------------------------------------------------------')
-        card_valid = False
-        while card_valid == False:
-            try:
-                player_move = int(input('Place a card (Key nr)'))
-    #------------------------------------Input validation----------------------------------------------
-                if not int(player_move) in self.cards.keys():
-                    print('invalid card, try again:')
-                elif self.cards[player_move] == 'Wizard' or self.cards[player_move] == 'Fool':
-                    card_valid = True
-                    break
-    #------------------------------------Checks if user has no round colours in case he is using another colour-------------
-                elif round_colour[0] != 'None' and self.cards[player_move].split(']')[0].replace('[','') != round_colour[0]:
-                    for card in self.cards.values():
-                        if round_colour[0] in card:
-                            print('You must select the round colour card if you have one in your hand!')
-                            card_valid = False
-                            break
-                        card_valid = True
-                else:
-                    card_valid = True
-                    break
-            except:
-                print('invalid key provided!')
-                continue 
-#------------------------------------Placing the card-----------------------------------------------------------------------
-        if card_valid == True: 
-            placed_card =HF.place_card(self.name, [self.cards[player_move], deck.deck_values[self.cards[player_move]][0]])
-
-            print(self.name, ' places: ',self.cards[player_move])
-            del self.cards[player_move]
-            return placed_card
-#--------------------------------------------------------------------- COMPUTER HAND----------------------------------------
-# class ComputerHand():
-#     def __init__(self,name):
-#         self.cards = []
-#         self.bid = 0
-#         self.name = name
-
-#     def AddCard(self,card, card_nr):
-#         self.cards.append(card)
-    
-#     def PlaceBid(self):
-#         cp_bid = 0
-#         for card in self.cards:
-#             if random.random() < deck.deck_values[card][1]:
-#                 cp_bid += 1
-#         bid_list[self.name] = [cp_bid,0]
-#         print(self.name, ' bids ', cp_bid)
-
-#     def PlaceCard(self): 
-#         available_cards = HandFunctions.get_av_cards(self.cards, round_colour[0], deck.dominant_colour)
-#         max_val = max(card[1] for card in available_cards)
-
-#         if bid_list[self.name][0] > bid_list[self.name][1]:
-#             if max_val > winner[2]:
-#                 #3.1.1cpu wants to win and can win:
-#                 card = HandFunctions.find_win_card(available_cards,winner[2])
-#                 placed_card = HandFunctions.place_card(self.name,card)
-#                 self.cards.remove(placed_card[1])
-#             else:
-#                 #3.1.2 cpu wants to win but he cannot:
-#                 card = HandFunctions.find_min_loss_card(available_cards)
-#                 placed_card = HandFunctions.place_card(self.name,card)
-#                 self.cards.remove(placed_card[1])                          
-#         else:
-#             #3.2 CPU wants to lose:
-#             card = HandFunctions.find_max_loss_card(available_cards,winner[2])
-#             placed_card = HandFunctions.place_card(self.name,card)
-#             self.cards.remove(placed_card[1]) 
-
-#         print(self.name, 'places:', placed_card[1])
-#         return placed_card
-
-
-
    
 #--------------------------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------GAME STARTS------------------------------------------------
@@ -184,7 +75,7 @@ while True:
     #----------------------------------Hands----------------------------------------------------------
             for player in player_list:
                 if player[0] == human_player:
-                    player[4] = Hand(player[0])
+                    player[4] = PH.Hand(player[0])
                 else:
                     player[4] = ComputerHand.ComputerHand(player[0])     
             for player in player_list:
