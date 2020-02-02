@@ -1,5 +1,3 @@
-#import WizardGame as Main
-
 '''
 see ReadMe Functions part
 '''

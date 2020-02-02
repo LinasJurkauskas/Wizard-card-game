@@ -10,25 +10,24 @@ class ComputerHand():
     def AddCard(self,card, card_nr):
         self.cards.append(card)
     
-    def PlaceBid(self):
-        import WizardGame as Main        
+    def place_bid(self, bid_list, session_nr, deck_values):      
         cp_bid = 0
         for card in self.cards:
-            if random.random() < Main.deck.deck_values[card][1]:
+            if random.random() < deck_values[card][1]:
                 cp_bid += 1
-        Main.bid_list[self.name] = [cp_bid,0]
+        bid_list[self.name] = [cp_bid,0]
         print(self.name, ' bids ', cp_bid)
+        return bid_list
 
-    def PlaceCard(self): 
-        import WizardGame as Main
+    def place_card(self,  dominant_colour, round_colour, winner, deck_values,bid_list):
         import HandFunctions as HF
-        available_cards = HF.get_av_cards(self.cards, Main.round_colour[0], Main.deck.dominant_colour)
+        available_cards = HF.get_av_cards(self.cards, round_colour, dominant_colour, deck_values)
         max_val = max(card[1] for card in available_cards)
 
-        if Main.bid_list[self.name][0] > Main.bid_list[self.name][1]:
-            if max_val > Main.winner[2]:
+        if bid_list[self.name][0] > bid_list[self.name][1]:
+            if max_val > winner[2]:
                 #3.1.1cpu wants to win and can win:
-                card = HF.find_win_card(available_cards,Main.winner[2])
+                card = HF.find_win_card(available_cards,winner[2])
                 placed_card = HF.place_card(self.name,card)
                 self.cards.remove(placed_card[1])
             else:
@@ -38,7 +37,7 @@ class ComputerHand():
                 self.cards.remove(placed_card[1])                          
         else:
             #3.2 CPU wants to lose:
-            card = HF.find_max_loss_card(available_cards,Main.winner[2])
+            card = HF.find_max_loss_card(available_cards,winner[2])
             placed_card = HF.place_card(self.name,card)
             self.cards.remove(placed_card[1]) 
 

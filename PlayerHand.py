@@ -1,4 +1,4 @@
-
+import HandFunctions as HF
 
 #--------------------------------------------------------------------- PLAYER HAND------------------------------------------------
 class Hand():
@@ -10,31 +10,29 @@ class Hand():
     def AddCard(self,card,card_nr):
         self.cards[card_nr] = card
 
-    def PlaceBid(self):
-        import WizardGame as Main
+    def place_bid(self, bid_list, session_nr, deck_values):
         bidding = 1
         while bidding == 1:
             try:
                 print('your cards:', self.cards)
-                print(Main.bid_list)
+                #print(Main.bid_list)
                 input_bid = int(input('Make a bid on how many rounds you expect to win: ')) 
-                if input_bid > Main.session_nr:
+                if input_bid > session_nr:
                     print("Can't bid more than there are rounds in this session!")
                 else:
                         self.bid = int(input_bid)
-                        Main.bid_list[self.name] = [int(input_bid),0]
-                        print(self.name, ' bids ', Main.bid_list[self.name][0] )
+                        bid_list[self.name] = [int(input_bid),0]
+                        print(self.name, ' bids ', bid_list[self.name][0] )
                         break
             except:
                 print('invalid number provided!')
                 continue 
+        return bid_list
 
-    def PlaceCard(self):
-        import WizardGame as Main
-        import HandFunctions as HF
+    def place_card(self,  dominant_colour, round_colour, winner, deck_values, bid_list):
         print('--------------------------------------------------------')
-        print('Dominant Colour of this session: ', Main.deck.dominant_colour)
-        print('Dominant Colour of this round: ', Main.round_colour[0])
+        print('Dominant Colour of this session: ', dominant_colour)
+        print('Dominant Colour of this round: ', round_colour)
         print('Remaining cards in your hand:', self.cards)
         print('--------------------------------------------------------')
         card_valid = False
@@ -48,9 +46,9 @@ class Hand():
                     card_valid = True
                     break
     #------------------------------------Checks if user has no round colours in case he is using another colour-------------
-                elif Main.round_colour[0] != 'None' and self.cards[player_move].split(']')[0].replace('[','') != Main.round_colour[0]:
+                elif round_colour != 'None' and self.cards[player_move].split(']')[0].replace('[','') != round_colour:
                     for card in self.cards.values():
-                        if Main.round_colour[0] in card:
+                        if round_colour in card:
                             print('You must select the round colour card if you have one in your hand!')
                             card_valid = False
                             break
@@ -63,7 +61,7 @@ class Hand():
                 continue 
 #------------------------------------Placing the card-----------------------------------------------------------------------
         if card_valid == True: 
-            placed_card = HF.place_card(self.name, [self.cards[player_move], Main.deck.deck_values[self.cards[player_move]][0]])
+            placed_card = HF.place_card(self.name, [self.cards[player_move], deck_values[self.cards[player_move]][0]])
 
             print(self.name, ' places: ',self.cards[player_move])
             del self.cards[player_move]

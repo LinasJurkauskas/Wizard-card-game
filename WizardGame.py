@@ -1,8 +1,8 @@
 # used libraries
 import random
 import time
-import sys
-import copy
+#import sys
+#import copy
 #-- Other modules
 import Variables
 import DeckClass
@@ -83,15 +83,14 @@ while True:
                 while card_nr <= session_nr:
                     player[4].AddCard(deck.deck.pop(),card_nr)
                     card_nr += 1
-                    #print(player[4].cards)
     #------------------------------------------Bidding----------------------------------------------------------
             bid_list = {}
             for player in player_list:
-                player[4].PlaceBid()
-                #time.sleep(1)
+                bid_list = player[4].place_bid(bid_list, session_nr, deck.deck_values)
+                time.sleep(1)
 
             print(bid_list)
-            #time.sleep(1)
+            time.sleep(1)
             print('--------------------------------------------------------------------------------')    
     #------------------------------------------Round----------------------------------------------------------
             round_nr = 1
@@ -101,13 +100,16 @@ while True:
                 round_colour = ['None'] 
                 print('Round ', str(round_nr), ' begins!')
                 print('--------------------------------------------------------------------------------')
-               # time.sleep(2)
+                time.sleep(1)
 #------------------------------------------Placing cards----------------------------------------              
                 for player in player_list:
-                    placed_card = player[4].PlaceCard()
+                    placed_card = player[4].place_card(deck.dominant_colour, round_colour[0], winner, deck.deck_values, bid_list)
+                    print(placed_card)
                     round_colour[0] = OF.check_round_dominant(round_colour[0],placed_card[1])
+                    print(round_colour)
                     winner = OF.find_winner(winner, placed_card, round_colour[0], deck.dominant_colour)
-                    #time.sleep(1)
+                    print(winner)
+                    time.sleep(1)
                 
                 winner2 = winner[0]
                 bid_list[winner2][1] = bid_list[winner2][1] +1
@@ -118,7 +120,7 @@ while True:
                 print('--------------------------------------------------------------------------------')
                 print('Score of this session:')
                 print(bid_list)
-                #time.sleep(2)
+                time.sleep(1)
                 
                 #reorder sequence based on winner
                 player_list = OF.round_reorder(player_list, winner[0])
