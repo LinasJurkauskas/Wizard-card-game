@@ -68,16 +68,13 @@ class Hand():
             except:
                 print('invalid key provided!')
                 continue 
-    
 #------------------------------------Placing the card-----------------------------------------------------------------------
         if card_valid == True: 
             placed_card[0] = self.name 
             placed_card[1] = self.cards[player_move] 
             placed_card[2] = deck.deck_values[self.cards[player_move]][0]
             print(self.name, ' places: ',self.cards[player_move])
-            if round_colour[0] == 'None' and self.cards[player_move].find('[') != -1:
-                round_colour[0] = self.cards[player_move].split(']')[0].replace('[','')
-            del self.cards[player_move] 
+            return placed_card
 
 #--------------------------------------------------------------------- COMPUTER HAND----------------------------------------
 class ComputerHand():
@@ -101,7 +98,6 @@ class ComputerHand():
         available_cards = HandFunctions.get_av_cards(self.cards, round_colour[0], deck.dominant_colour)
         max_val = max(card[1] for card in available_cards)
 
-        #3.defines if cpu wants to win
         if bid_list[self.name][0] > bid_list[self.name][1]:
             if max_val > winner[2]:
                 #3.1.1cpu wants to win and can win:
@@ -120,9 +116,9 @@ class ComputerHand():
             self.cards.remove(placed_card[1]) 
 
         print(self.name, 'places:', placed_card[1])
-        #4. round dominant colour is determined if it was not before and the placed card is coloured.
-        if round_colour[0] == 'None' and placed_card[1].find('[') != -1:
-            round_colour[0] = placed_card[1].split(']')[0].replace('[','')  
+        return placed_card
+
+
 
    
 #--------------------------------------------------------------------------------------------------------------------------------
@@ -223,7 +219,8 @@ while True:
                # time.sleep(2)
 #------------------------------------------Placing cards----------------------------------------                
                 for player in player_list:
-                    player[4].PlaceCard()
+                    placed_card = player[4].PlaceCard()
+                    round_colour[0] = OrderFunctions.check_round_dominant(round_colour[0],placed_card[1])
                     winner = OrderFunctions.find_winner(winner, placed_card, round_colour[0], deck.dominant_colour)
                     #time.sleep(1)
                 

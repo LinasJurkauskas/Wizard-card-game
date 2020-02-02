@@ -1,6 +1,7 @@
 import WizardGame
 import DeckClass
 import random
+import copy
 
 
 def get_av_cards(cards,round_colour, dominant_colour):
@@ -16,7 +17,7 @@ def get_av_cards(cards,round_colour, dominant_colour):
             #1.2 wizard and fool can be used all the time:
         elif card == 'Wizard' or card == 'Fool':
             available_cards.append([card, WizardGame.deck.deck_values[card][0]])
-        elif round_colour[0] != 'None':
+        elif round_colour != 'None':
             #1.3 round dominant colour exists, if cpu has card in deck he is limited to only using round dominant colour.
             nr_w_dominant_colour = 0
             #1.3.1checks if cpu player has dominant colour
@@ -35,17 +36,6 @@ def get_av_cards(cards,round_colour, dominant_colour):
                     #card not added
     return available_cards
 
-# def cpu_action(name), min_val, max_val):
-#     '''
-#     Defines whether computer wants to win or lose the round
-#     And if he is able to do that
-#     '''
-#     if bid_list[self.name][0] > bid_list[self.name][1]:
-#         win = 1
-#     else:
-#         win = 0
-    
-#     if win = 1 and max_val 
 
 def find_win_card(available_cards, winner_val):
     win_cards = []
@@ -81,10 +71,43 @@ def place_card(name,card):
 
     return placed_card
 
-
-
-
-
+# def h_get_av_cards(cards,round_colour, dominant_colour):
+#     '''
+#     Used by human player
+#     creates a temporary dictionary of all available cards in player hand
+#     list is later on used to define which card to place
+#     '''
+#     i = 0
+#     available_cards = {}
+#     while i < len(cards):
+#         if round_colour == 'None':
+#             #1.1 no round dominant colour yet, all cards can be used:
+#             available_cards[i] = cards[i]
+#             #available_cards.append([card, WizardGame.deck.deck_values[card][0]])
+#             #1.2 wizard and fool can be used all the time:
+#         elif card == 'Wizard' or card == 'Fool':
+#             available_cards[i] = cards[i]
+#             #available_cards.append([card, WizardGame.deck.deck_values[card][0]])
+#         elif round_colour != 'None':
+#             #1.3 round dominant colour exists, if cpu has card in deck he is limited to only using round dominant colour.
+#             nr_w_dominant_colour = 0
+#             #1.3.1checks if cpu player has dominant colour
+#             #for card2 in cards:
+#             while i2 < len(cards):
+#                 if round_colour in cards[i2]:
+#                     nr_w_dominant_colour = 1
+#             #1.3.2 if cpu has no round dominant all cards can be placed.Else only the round dominant ones
+#             if nr_w_dominant_colour == 0 or round_colour in cards[i][0]:
+#                 if round_colour in cards[i][0] or dominant_colour in cards[i][0]:
+#                     #1.3.2.1 if card is session or round dominant, it retains its value
+#                     #available_cards.append([card, WizardGame.deck.deck_values[card][0]])
+#                     available_cards[i] = cards[i]
+#                 else: #1.3.2.2 other colour cards can be added but they have no value
+#                     available_cards.append([card, 1])
+#             else:
+#                 pass 
+#                     #card not added
+#     return available_cards
 
 
 
@@ -131,4 +154,27 @@ def place_card(name,card):
         #             pass  
 
 
-    
+        #             if not int(player_move) in self.cards.keys():
+    #                 print(self.cards)
+    #                 print('invalid card, try again:')
+    #             elif self.cards[player_move] == 'Wizard' or self.cards[player_move] == 'Fool':
+    #                 card_valid = True
+    #                 break
+    # #------------------------------------Checks if user has no round colours in case he is using another colour-------------
+    #             elif round_colour[0] != 'None' and self.cards[player_move].split(']')[0].replace('[','') != round_colour[0]:
+    #                 for card in self.cards.values():
+    #                     if round_colour[0] in card:
+    #                         print('You must select the round colour card if you have one in your hand!')
+    #                         card_valid = False
+    #                         break
+    #                     card_valid = True
+    #             else:
+    #                 card_valid = True
+    #                 break
+    #         except:
+    #             print('invalid key provided!')
+    #             continue 
+
+                # placed_card[0] = self.name 
+            # placed_card[1] = self.cards[player_move] 
+            # placed_card[2] = deck.deck_values[self.cards[player_move]][0]
