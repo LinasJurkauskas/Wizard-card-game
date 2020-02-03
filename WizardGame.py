@@ -33,7 +33,7 @@ while True:
                     continue
                 else:
                     print("let's go!")
-                    #time.sleep(2)
+                    time.sleep(1)
                     break
             except:
                 print('invalid number of players!')
@@ -54,8 +54,8 @@ while True:
         print('Players!:')
         for player in player_list:
             print(player[0])
+            time.sleep(1)
 
-        #time.sleep(1)
         total_sessions = int(60/len(player_list))
         print('Number of sessions in the game:', total_sessions)
         session_nr = 1     
@@ -67,9 +67,9 @@ while True:
             if session_nr < total_sessions: 
                 deck.dominant_colour = deck.FindDominant()
             deck.EvaluateDeck()
+            time.sleep(1)
             print('--------------------------------------------------------------------------------')
             print('Session ', session_nr,'out of ',total_sessions, ' begins!')
-            #time.sleep(2)
             print('This Session dominates: ',deck.dominant_card)
             print('--------------------------------------------------------------------------------')
     #----------------------------------Hands----------------------------------------------------------
@@ -104,11 +104,11 @@ while True:
 #------------------------------------------Placing cards----------------------------------------              
                 for player in player_list:
                     placed_card = player[4].place_card(deck.dominant_colour, round_colour[0], winner, deck.deck_values, bid_list)
-                    print(placed_card)
+                    #print(placed_card)
                     round_colour[0] = OF.check_round_dominant(round_colour[0],placed_card[1])
-                    print(round_colour)
+                    #print(round_colour)
                     winner = OF.find_winner(winner, placed_card, round_colour[0], deck.dominant_colour)
-                    print(winner)
+                    #print(winner)
                     time.sleep(1)
                 
                 winner2 = winner[0]
@@ -120,14 +120,12 @@ while True:
                 print('--------------------------------------------------------------------------------')
                 print('Score of this session:')
                 print(bid_list)
-                time.sleep(1)
+                time.sleep(2)
                 
                 #reorder sequence based on winner
                 player_list = OF.round_reorder(player_list, winner[0])
                 round_nr += 1
 #------------------------------------------------------------------------------------
-            #player_list = OrderFunctions.score_updater(player_list)
-            #total_score_updater()
             OF.score_updater(player_list, bid_list)
             #time.sleep(2)    
             print('Results: (sessions ,',session_nr,'/',total_sessions, ')')

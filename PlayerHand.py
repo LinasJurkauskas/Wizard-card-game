@@ -15,7 +15,6 @@ class Hand():
         while bidding == 1:
             try:
                 print('your cards:', self.cards)
-                #print(Main.bid_list)
                 input_bid = int(input('Make a bid on how many rounds you expect to win: ')) 
                 if input_bid > session_nr:
                     print("Can't bid more than there are rounds in this session!")
