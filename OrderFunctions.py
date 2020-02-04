@@ -1,7 +1,3 @@
-'''
-see ReadMe Functions part
-'''
-
 def session_reorder(player_list):
     for player in player_list:
         if player[2] == len(player_list)-1:
@@ -10,7 +6,6 @@ def session_reorder(player_list):
             player[2] += 1
     player_list = sorted(player_list, key=lambda x: x[2], reverse=False)   
     return player_list
-
 
 def round_reorder(player_list, winner):
     i = 0
