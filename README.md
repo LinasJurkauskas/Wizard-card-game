@@ -15,7 +15,7 @@
 * `Highest value card wins the round.`
 More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 
-## Code mechanics
+## Play options
 * 1 human player.
 * Human player can choose between 2-5 computer opponents.
 
@@ -25,6 +25,11 @@ More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 * list `CPU_names` - list of available CPU players to join in the game.
 
 * list `player_list` - contains: player name,player score, player queue line for session, player queue line for round, player current hand class object (hand for human, computer_hand for computer)
+
+## Possible areas of improvement (development)
+* UI (django/tkinter)
+* multiple human players option
+* improve computer logic (place_card/place_bid mechanics) to improve computer skill.
 
 ### Classes
 #### 1. Deck_class - recreated each time a new session starts: 
