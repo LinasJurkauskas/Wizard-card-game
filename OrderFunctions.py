@@ -79,8 +79,7 @@ def find_winner(winner, placed_card, round_colour,dominant_colour):
     
     return winner
 
-
-    
+   
 def check_round_dominant(round_colour,card):
     if round_colour == 'None' and card.find('[') != -1:
         round_colour = card.split(']')[0].replace('[','')

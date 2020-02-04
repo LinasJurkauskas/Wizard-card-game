@@ -1,5 +1,5 @@
 import random
-
+import HandFunctions as HF
 
 class ComputerHand():
     def __init__(self,name):
@@ -7,7 +7,7 @@ class ComputerHand():
         self.bid = 0
         self.name = name
 
-    def AddCard(self,card, card_nr):
+    def add_card(self,card, card_nr):
         self.cards.append(card)
     
     def place_bid(self, bid_list, session_nr, deck_values):      
@@ -19,8 +19,7 @@ class ComputerHand():
         print(self.name, ' bids ', cp_bid)
         return bid_list
 
-    def place_card(self,  dominant_colour, round_colour, winner, deck_values,bid_list):
-        import HandFunctions as HF
+    def place_card(self,  dominant_colour, round_colour, winner, deck_values,bid_list):    
         available_cards = HF.get_av_cards(self.cards, round_colour, dominant_colour, deck_values)
         max_val = max(card[1] for card in available_cards)
 

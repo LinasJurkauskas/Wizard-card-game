@@ -35,7 +35,3 @@ class DeckClass():
             else:
                 self.deck_values[value][0] = self.deck_values[value][0] + 20
                 self.deck_values[value][1] = self.deck_values[value][1] + 0.25
-
-    # def Deal(self):
-    #     single_card = self.deck.pop()
-    #     return single_card

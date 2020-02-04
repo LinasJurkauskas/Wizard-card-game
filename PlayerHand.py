@@ -7,7 +7,7 @@ class Hand():
         self.bid = 0
         self.name = name
 
-    def AddCard(self,card,card_nr):
+    def add_card(self,card,card_nr):
         self.cards[card_nr] = card
 
     def place_bid(self, bid_list, session_nr, deck_values):
