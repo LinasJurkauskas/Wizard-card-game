@@ -1,4 +1,4 @@
-# Wizard card game
+# [Wizard card game](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 
 ## General Game mechanics
 
@@ -61,26 +61,11 @@ More info can be found [here](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 ##### 3.1 place_bid 
  * CPU evalutes all his cards and based on its value and % chance determines if he wants to bid on it.
 ##### 3.2 place_card
-* defines what cards cpu can place in the round (cpu_round_cards list generated)
+* defines what cards cpu can place in the round.
 * defines min/max values of his cpu_round_cards.
 * defines if CPU wants to win/lose, can cpu win/lose and takes the action (based on its score in the bid_list and the current winner score)
 * round dominant colour determined.
 
-### FUNCTIONS
-####  identify_winner()
-* Function defines the current winner of the round.
-* Runs everytime a new card is placed so the CPU knows the existing winner and can evaluate his option to go for win or loss.
 
-#### session_players_reorder()
-* this function reorders player_list after session (sequence incrementaly increases)
-* last player becomes first.
-* other players move by 1 point.
-
-#### total_score_updater()
-* function calculates the score and updates it in player_list based on bid_list.
-* Run at the end of each session
-
-#### round_winner_reorder()
-* this function reorders player_list after round (winner always starts first)
 
 
