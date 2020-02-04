@@ -115,7 +115,6 @@ while True:
                 print('--------------------------------------------------------------------------------')
                 print('Score of this session:')
                 print(bid_list)
-                #time.sleep(1)
                 
                 player_list = OF.round_reorder(player_list, winner[0])
                 round_nr += 1
