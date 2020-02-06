@@ -159,7 +159,7 @@ if __name__ == "__main__":
                         bid_list[player[0]],
                     )
                 player_list = OF.session_reorder(player_list)
-                test = input("Press Enter to Continue")
+                test = input("Press Enter to Continue ")
                 if test == "exit":
                     break
                 session_nr += 1
