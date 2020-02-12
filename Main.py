@@ -7,14 +7,14 @@ import Constants as VAR
 import DeckClass as DC
 import PlayerHand as PH
 import ComputerHand as CH
-import OrderFunctions as OF
+import MainFunctions as MF
 import HandFunctions as HF
 
-# ---------------------------------------------------------------------GAME STARTS--------
+# ---------------------------------------------GAME STARTS-----------------------
 if __name__ == "__main__":
 
     while True:
-        # --------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
         play_question = input("Welcome to Wizard! play? (Y/N)")
 
         if not play_question.lower().startswith("y"):
@@ -38,7 +38,7 @@ if __name__ == "__main__":
                 except:
                     print("invalid number of players!")
                     continue
-            # --------------------------------------------------------
+# --------------------------------------------------------------------
             player_list = []
             player_list.append([human_player, 0, 0, 0, ""])
             random.shuffle(VAR.computer_names)
@@ -59,7 +59,7 @@ if __name__ == "__main__":
             total_sessions = int(60 / len(player_list))
             print("Number of sessions in the game:", total_sessions)
             session_nr = 1
-            # ----------------------------------Deck initialize--------------------------
+# ----------------------------------Deck initialize------------------------
             while session_nr <= total_sessions:
                 deck = DC.DeckClass()
                 deck.Shuffle()
@@ -67,16 +67,8 @@ if __name__ == "__main__":
                 if session_nr < total_sessions:
                     deck.dominant_colour = deck.FindDominant()
                 deck.EvaluateDeck()
-                time.sleep(1)
-                print(
-                    "---------------------------------------------------------------------"
-                )
-                print("Session ", session_nr, "out of ", total_sessions, " begins!")
-                print("This Session dominates: ", deck.dominant_card)
-                print(
-                    "---------------------------------------------------------------------"
-                )
-                # ----------------------------------Hands-------------------------------------------------
+                MF.session_initialize_print(session_nr,total_sessions, deck.dominant_card)
+# ----------------------------------Hands-------------------------------
                 for player in player_list:
                     if player[0] == human_player:
                         player[4] = PH.Hand(player[0])
@@ -87,31 +79,20 @@ if __name__ == "__main__":
                     while card_nr <= session_nr:
                         player[4].add_card(deck.deck.pop(), card_nr)
                         card_nr += 1
-                # ------------------------------------------Bidding----------------------------------------
+# ------------------------------------------Bidding----------------------------
                 bid_list = {}
                 for player in player_list:
-                    bid_list = player[4].place_bid(
-                        bid_list, session_nr, deck.deck_values
-                    )
+                    bid_list = player[4].place_bid(bid_list, session_nr, deck.deck_values)
                     time.sleep(0.5)
-
-                print(bid_list)
-                time.sleep(1)
-                print(
-                    "---------------------------------------------------------------------"
-                )
-                # ------------------------------------Round-----------------------------------
+                MF.bid_list_print(bid_list,0)
+# ------------------------------------Round-----------------------------------
                 round_nr = 1
                 while round_nr <= session_nr:
                     winner = ["None", "None", 0]
                     placed_card = ["None", "None", 0]
                     round_colour = ["None"]
-                    print("Round ", str(round_nr), " begins!")
-                    print(
-                        "---------------------------------------------------------------------"
-                    )
-                    time.sleep(0.5)
-                    # --------------------------------Placing cards------------------------
+                    MF.round_initialize_print(round_nr)
+# --------------------------------Placing cards------------------------
                     for player in player_list:
                         placed_card = player[4].place_card(
                             deck.dominant_colour,
@@ -120,10 +101,10 @@ if __name__ == "__main__":
                             deck.deck_values,
                             bid_list,
                         )
-                        round_colour[0] = OF.check_round_dominant(
+                        round_colour[0] = MF.check_round_dominant(
                             round_colour[0], placed_card[1]
                         )
-                        winner = OF.find_winner(
+                        winner = MF.find_winner(
                             winner, placed_card, round_colour[0], deck.dominant_colour
                         )
                         time.sleep(1)
@@ -131,46 +112,19 @@ if __name__ == "__main__":
                     winner2 = winner[0]
                     bid_list[winner2][1] = bid_list[winner2][1] + 1
 
-                    # ----------------------------Declaring winner----------------------------
-                    print(
-                        "---------------------------------------------------------------------"
-                    )
-                    print(
-                        winner[0], "wins round number ", str(round_nr), "!"
-                    )  # score: ', winner[2]
-                    print(
-                        "---------------------------------------------------------------------"
-                    )
-                    time.sleep(1)
-                    print("Score of this session:")
-                    print(bid_list)
+# ----------------------------Declaring winner----------------------------
+                    MF.winner_print(winner[0],round_nr)
+                    MF.bid_list_print(bid_list,1)
 
-                    player_list = OF.round_reorder(player_list, winner[0])
+                    player_list = MF.round_reorder(player_list, winner[0])
                     round_nr += 1
-                # ------------------------------------------------------------------------
-                OF.score_updater(player_list, bid_list)
-                print("Results: (sessions ,", session_nr, "/", total_sessions, ")")
-                for player in player_list:
-                    print(
-                        player[0],
-                        "score: ",
-                        player[1],
-                        "bids/wins: ",
-                        bid_list[player[0]],
-                    )
-                player_list = OF.session_reorder(player_list)
+# ------------------------------------------------------------------------
+                MF.score_updater(player_list, bid_list)
+                MF.results_print(session_nr,total_sessions,player_list,bid_list)
+                player_list = MF.session_reorder(player_list)
                 test = input("Press Enter to Continue ")
                 if test == "exit":
                     break
                 session_nr += 1
                 continue
-
-            print(
-                "---------------------------------------------------------------------"
-            )
-            print(
-                "-----------------------------Game over-------------------------------"
-            )
-            print(
-                "---------------------------------------------------------------------"
-            )
+            MF.game_over_print

@@ -31,11 +31,12 @@ class Hand:
         return bid_list
 
     def place_card(self, dominant_colour, round_colour, winner, deck_values, bid_list):
-        print("--------------------------------------------------------")
+        mark_nr = 60
+        print("-"*mark_nr)
         print("Dominant Colour of this session: ", dominant_colour)
         print("Dominant Colour of this round: ", round_colour)
         print("Remaining cards in your hand:", self.cards)
-        print("--------------------------------------------------------")
+        print("-"*mark_nr)
         card_valid = False
         while card_valid == False:
             try:

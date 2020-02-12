@@ -1,3 +1,5 @@
+import time
+
 def session_reorder(player_list):
     for player in player_list:
         if player[2] == len(player_list) - 1:
@@ -82,3 +84,47 @@ def check_round_dominant(round_colour, card):
     else:
         round_colour
     return round_colour
+
+
+def session_initialize_print(session_nr, total_sessions, dominant_card):
+    time.sleep(1)
+    mark_nr = 60
+    print("-"*mark_nr)
+    print("Session ", session_nr, "out of ", total_sessions, " begins!")
+    print("This Session dominates: ", dominant_card)
+    print("-"*mark_nr)
+
+
+def round_initialize_print(round_nr):
+    mark_nr = 60
+    print("-"*mark_nr)
+    print("Round ", str(round_nr), " begins!")
+    print("-"*mark_nr)
+    time.sleep(0.5)
+   
+def winner_print(winner, round_nr):
+    mark_nr = 60
+    print("-"*mark_nr)  
+    print(winner, "wins round number ", str(round_nr), "!")
+    print("-"*mark_nr)  
+    time.sleep(1)
+
+def bid_list_print(bid_list,w_score):
+    mark_nr = 60
+    print("-"*mark_nr)
+    if w_score == 1:
+        print("Score of this session:")
+    print(bid_list)
+    print("-"*mark_nr)
+    time.sleep(1)
+
+def results_print(session_nr,total_sessions, player_list,bid_list):
+    print("Results: (sessions ,", session_nr, "/", total_sessions, ")")
+    for player in player_list:
+        print(player[0],"score: ",player[1],"bids/wins: ",bid_list[player[0]])    
+
+def game_over_print(session_nr,total_sessions, player_list,bid_list):
+    mark_nr = 60
+    print("-"*mark_nr)
+    print("Game over")
+    print("-"*mark_nr)
