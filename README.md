@@ -1,3 +1,4 @@
+![](https://cdn.shoplightspeed.com/shops/622104/files/10134070/image.jpg)
 # [Wizard card game](https://en.wikipedia.org/wiki/Wizard_(card_game)).
 
 ## General Game mechanics
