@@ -3,7 +3,7 @@ import random
 import time
 
 # Other modules
-import Variables as VAR
+import Constants as VAR
 import DeckClass as DC
 import PlayerHand as PH
 import ComputerHand as CH

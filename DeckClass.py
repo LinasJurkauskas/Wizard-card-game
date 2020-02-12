@@ -1,4 +1,4 @@
-import Variables
+import Constants as CS
 import random
 import copy
 
@@ -12,8 +12,8 @@ class DeckClass:
         self.dominant_card = ""
         self.deck = []
         self.deck_values = {}
-        self.deck_values = copy.deepcopy(Variables.cards_values)
-        for card in Variables.cards:
+        self.deck_values = copy.deepcopy(CS.cards_values)
+        for card in CS.cards:
             self.deck.append(card)
 
     def Shuffle(self):
